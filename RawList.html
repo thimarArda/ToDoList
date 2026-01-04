@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -18,7 +19,7 @@
             <div class="error-message" id="inputError"></div>
         </div>
 
-
+  <h1>To Do List</h1>
 
 
     <div class="filter-container">
@@ -48,6 +49,48 @@
 
         
     </div>
+
+     <!-- Edit Popup Modal -->
+    <div class="popup" id="edit-popup">
+        <div class="popup-content">
+            <h2>Edit Task</h2>
+            <input type="text" id="edit-input">
+            <div id="edit-error-message" class="error-message"></div>
+            <button class="save-btn" >Save</button>
+            <button class="cancel-btn" >Cancel</button>
+        </div>
+    </div>
+
+    <!-- Delete Task Popup -->
+    <div class="popup" id="delete-task-popup">
+        <div class="popup-content">
+            <h2>Are you sure?</h2>
+            <p>This will delete the selected task.</p>
+            <button class="confirm-btn" id="confirm-delete-btn">Yes, Delete</button>
+            <button class="cancel-btn" >Cancel</button>
+        </div>
+    </div>
+
+    <!-- Delete Done Tasks Popup -->
+    <div class="popup" id="delete-done-popup">
+        <div class="popup-content">
+            <h2>Are you sure?</h2>
+            <p>This will delete all completed tasks.</p>
+            <button class="confirm-btn" >Yes, Delete Done</button>
+            <button class="cancel-btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Delete All Tasks Popup -->
+    <div class="popup" id="delete-all-popup">
+        <div class="popup-content">
+            <h2>Are you sure?</h2>
+            <p>This will delete all tasks.</p>
+            <button class="confirm-btn" >Yes, Delete All</button>
+            <button class="cancel-btn" >Cancel</button>
+        </div>
+    </div>
+
 
    
 
