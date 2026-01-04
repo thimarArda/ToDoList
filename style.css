@@ -4,6 +4,286 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-     font-family: sans-serif;
+    font-family: Arial, sans-serif;
 }
 
+
+/* 
+   HEADER / MAIN CONTAINER
+*/
+.header {
+    max-width: 1200px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 150%;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   INPUT AREA
+========================= */
+.input-container {
+    margin: 0 100px 20px;
+}
+
+.input-row {
+    display: flex;
+    width: 100%;
+}
+
+.input-row input {
+    flex: 1;
+    padding: 10px;
+    font-size: 100%;
+    border: 1px solid #333;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-row button {
+    padding: 10px 20px;
+    font-size: 100%;
+    background-color: #0e8ec5;
+    color: #fff;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.input-row button:hover {
+    background-color: #0a4761;
+}
+
+.error-message {
+    margin-top: 5px;
+    font-size: 85%;
+    color: red;
+}
+
+/* 
+   FILTER BUTTONS
+ */
+.filter-container {
+    margin: 20px 100px;
+}
+
+.filter-btn {
+    width: 30%;
+    padding: 10px;
+    margin: 5px;
+    font-size: 95%;
+    background-color: #0e8ec5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background-color: #0a4a65;
+}
+
+/* 
+   TASK LIST
+ */
+.tasks-container {
+    margin: 0 100px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+#tasksList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #a5a5a5;
+}
+
+.task-item span {
+    font-size: 100%;
+    text-transform: capitalize;
+}
+
+.task-item.completed span {
+    text-decoration: line-through;
+    color: red;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Icons */
+.task-actions button {
+    background: none;
+    border: none;
+    font-size: 140%;
+    cursor: pointer;
+}
+
+.task-actions .edit {
+    color: gold;
+}
+
+.task-actions .delete {
+    color: red;
+}
+
+/* 
+   DELETE BUTTONS
+ */
+.deletion {
+    margin: 20px 100px;
+}
+
+.deletion button {
+    width: 40%;
+    padding: 10px;
+    margin: 5px;
+    font-size: 95%;
+    background-color: #c71d10;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deletion button:hover {
+    background-color: #6d0101;
+}
+
+/* 
+   POPUPS
+ */
+.popup {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.popup-content h2 {
+    font-size: 120%;
+}
+
+.popup-content p {
+    font-size: 95%;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    font-size: 100%;
+    margin-bottom: 10px;
+}
+
+.popup-content button {
+    padding: 8px 15px;
+    font-size: 95%;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.confirm-btn:hover {
+    background-color: #388e3c;
+}
+
+.cancel-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* 
+   RESPONSIVE
+ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .input-container,
+    .filter-container,
+    .tasks-container,
+    .deletion {
+        margin: 0 30px;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+    body {
+        font-size: 90%;
+        padding: 10px;
+    }
+
+    .header {
+        border-radius: 0;
+    }
+
+    .input-container,
+    .filter-container,
+    .tasks-container,
+    .deletion {
+        margin: 0;
+    }
+
+    .filter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-btn,
+    .deletion button {
+        width: 100%;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .popup-content {
+        width: 90%;
+    }
+}
