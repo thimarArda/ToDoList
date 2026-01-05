@@ -1,4 +1,49 @@
 let todos = [];
+let deletingIndex = null;
+
+/* ===== RENDER TODOS ===== */
+const renderTodos = () => {
+    const list = document.getElementById("tasksList");
+    list.innerHTML = "";
+
+    todos.forEach((todo, index) => {
+        const listItem = document.createElement("li");
+
+        //  Checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = todo.completed;
+        checkbox.addEventListener("click", () => {
+            todo.completed = !todo.completed;
+            saveTodos();
+            renderTodos();
+        });
+
+        //  Task text
+        const textSpan = document.createElement("span");
+        textSpan.textContent = todo.text;
+        if (todo.completed) textSpan.style.textDecoration = "line-through";
+
+        //  Edit button
+        const editBtn = document.createElement("button");
+        editBtn.innerHTML = "<i class='fa-solid fa-pencil'></i>";
+        editBtn.addEventListener("click", () => openEditPopup(index));
+
+        // Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
+        deleteBtn.addEventListener("click", () => openDeleteTaskPopup(index));
+
+        // Append everything to the list item
+        listItem.appendChild(checkbox);
+        listItem.appendChild(textSpan);
+        listItem.appendChild(editBtn);
+        listItem.appendChild(deleteBtn);
+
+        // Append list item to the ul
+        list.appendChild(listItem);
+    });
+};
 
 /* ===== SAVE TODOS ===== */
 const saveTodos = () => {
@@ -8,24 +53,20 @@ const saveTodos = () => {
 /* ===== LOAD TODOS ===== */
 const loadTodos = () => {
     const storedTodos = localStorage.getItem("todos");
-
     if (storedTodos !== null) {
         todos = JSON.parse(storedTodos);
-        renderTodos(); // to show the current data on the screen
+        renderTodos();
     }
 };
 
 /* ===== ADD TASK ===== */
 const addTask = () => {
-    //  Get input value
     const input = document.getElementById("todoInput");
     const errorMessage = document.getElementById("inputError");
     const task = input.value.trim();
 
-    // Clear previous errors
     errorMessage.textContent = "";
 
-    // 3️⃣ Validation
     if (task === "") {
         errorMessage.textContent = "Task cannot be empty.";
         return;
@@ -39,85 +80,47 @@ const addTask = () => {
         return;
     }
 
-    
     todos.push({ text: task, completed: false });
-
-    // to Clear input field
     input.value = "";
-
     saveTodos();
-
-    //  Update the UI
     renderTodos();
 };
 
+/* ===== POPUP FUNCTIONS ===== */
+const openDeleteTaskPopup = (index) => {
+    deletingIndex = index;
+    document.getElementById("delete-task-popup").style.display = "flex";
+};
 
+const deleteTask = () => {
+    if (deletingIndex !== null) {
+        todos.splice(deletingIndex, 1);
+        saveTodos();
+        closePopup();
+        renderTodos();
+        deletingIndex = null;
+    }
+};
+
+const closePopup = () => {
+    document.querySelectorAll(".popup").forEach(popup => {
+        popup.style.display = "none";
+    });
+};
+
+/* ===== WINDOW ONLOAD & LISTENERS ===== */
 window.addEventListener("load", () => {
-    // Attach listener to the Add button
+    // Add task button
     document.getElementById("addBtn").addEventListener("click", addTask);
 
-
-      // Delete Task button listener
+    // Delete task confirm button
     document.getElementById("confirm-delete-btn").addEventListener("click", deleteTask);
 
-
-        // Cancel popup
+    // Cancel buttons on popups
     document.querySelectorAll(".cancel-btn").forEach(btn => {
         btn.addEventListener("click", closePopup);
     });
 
-    // Also load tasks when page opens
+    // Load tasks from localStorage when page loads
     loadTodos();
 });
-
-/* ===== RENDER TODOS ===== */
-const renderTodos = () => {
-    const list = document.getElementById("tasksList");
-    list.innerHTML = "";
-
-    todos.forEach((todo, index) => {
-        const listItem = document.createElement("li");
-
-        // 1️⃣ Checkbox
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = todo.completed;
-        checkbox.addEventListener("click", () => {
-            todo.completed = !todo.completed;
-            saveTodos();
-            renderTodos();
-        });
-
-        // 2️⃣ Task text
-        const textSpan = document.createElement("span");
-        textSpan.textContent = todo.text;
-        if (todo.completed) textSpan.style.textDecoration = "line-through";
-
-        // 3️⃣ Edit button
-        const editBtn = document.createElement("button");
-        editBtn.innerHTML = "<i class='fa-solid fa-pencil'></i>";
-        editBtn.addEventListener("click", () => openEditPopup(index));
-
-        // 4️⃣ Delete button
-        const deleteBtn = document.createElement("button");
-        deleteBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
-        deleteBtn.addEventListener("click", () => openDeleteTaskPopup(index));
-
-        // Append to listItem
-        listItem.appendChild(checkbox);
-        listItem.appendChild(textSpan);
-        listItem.appendChild(editBtn);
-        listItem.appendChild(deleteBtn);
-
-        list.appendChild(listItem);
-    });
-};
-
-
-
-const deleteTask = () => {
-    todos.splice(deletingIndex, 1);
-    saveTodos();
-    closePopup();
-    renderTodos();
-};
