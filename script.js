@@ -56,6 +56,16 @@ window.addEventListener("load", () => {
     // Attach listener to the Add button
     document.getElementById("addBtn").addEventListener("click", addTask);
 
+
+      // Delete Task button listener
+    document.getElementById("confirm-delete-btn").addEventListener("click", deleteTask);
+
+
+        // Cancel popup
+    document.querySelectorAll(".cancel-btn").forEach(btn => {
+        btn.addEventListener("click", closePopup);
+    });
+
     // Also load tasks when page opens
     loadTodos();
 });
@@ -66,11 +76,9 @@ const renderTodos = () => {
     list.innerHTML = "";
 
     todos.forEach((todo, index) => {
-        // Create list item
         const listItem = document.createElement("li");
-        listItem.textContent = todo.text;
 
-        // Optional: add checkbox
+        // 1️⃣ Checkbox
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = todo.completed;
@@ -80,7 +88,36 @@ const renderTodos = () => {
             renderTodos();
         });
 
-        listItem.prepend(checkbox); // checkbox before text
+        // 2️⃣ Task text
+        const textSpan = document.createElement("span");
+        textSpan.textContent = todo.text;
+        if (todo.completed) textSpan.style.textDecoration = "line-through";
+
+        // 3️⃣ Edit button
+        const editBtn = document.createElement("button");
+        editBtn.innerHTML = "<i class='fa-solid fa-pencil'></i>";
+        editBtn.addEventListener("click", () => openEditPopup(index));
+
+        // 4️⃣ Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "<i class='fa-solid fa-trash'></i>";
+        deleteBtn.addEventListener("click", () => openDeleteTaskPopup(index));
+
+        // Append to listItem
+        listItem.appendChild(checkbox);
+        listItem.appendChild(textSpan);
+        listItem.appendChild(editBtn);
+        listItem.appendChild(deleteBtn);
+
         list.appendChild(listItem);
     });
+};
+
+
+
+const deleteTask = () => {
+    todos.splice(deletingIndex, 1);
+    saveTodos();
+    closePopup();
+    renderTodos();
 };
